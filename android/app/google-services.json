@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1098907019326",
+    "firebase_url": "https://mezuniyet-projesi-iot-firebase-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mezuniyet-projesi-iot-firebase",
+    "storage_bucket": "mezuniyet-projesi-iot-firebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098907019326:android:d7457b027a8ce82968c96f",
+        "android_client_info": {
+          "package_name": "com.gazi.evguvenlik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGhFANaVeKumUVmrvNLaRnkimtfjYBgpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098907019326:android:aad4a38e131bcaff68c96f",
+        "android_client_info": {
+          "package_name": "com.gazi.evguvenliksistemi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGhFANaVeKumUVmrvNLaRnkimtfjYBgpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
