@@ -8,25 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1098907019326:android:d7457b027a8ce82968c96f",
-        "android_client_info": {
-          "package_name": "com.gazi.evguvenlik"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBGhFANaVeKumUVmrvNLaRnkimtfjYBgpc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1098907019326:android:aad4a38e131bcaff68c96f",
         "android_client_info": {
           "package_name": "com.gazi.evguvenliksistemi"
