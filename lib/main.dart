@@ -28,7 +28,7 @@ class ToggleValuePage extends StatefulWidget {
 class _ToggleValuePageState extends State<ToggleValuePage> {
   // Firebase Realtime Database referansı
   final DatabaseReference _dbRef =
-      FirebaseDatabase.instance.ref('toggle_value');
+      FirebaseDatabase.instance.ref('/test/stream/toggle_value');
 
   bool _currentValue = false;
   bool _isLoading = true;
