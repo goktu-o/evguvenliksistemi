@@ -26,40 +26,75 @@ class ToggleValuePage extends StatefulWidget {
 }
 
 class _ToggleValuePageState extends State<ToggleValuePage> {
-  // Firebase Realtime Database referansı
-  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref('/led');
+  // Firebase Realtime Database references
+  final DatabaseReference _redLedRef =
+      FirebaseDatabase.instance.ref('/red_led');
+  final DatabaseReference _blueLedRef =
+      FirebaseDatabase.instance.ref('/blue_led');
+  final DatabaseReference _greenLedRef =
+      FirebaseDatabase.instance.ref('/green_led');
 
-  bool _currentValue = false;
+  bool _redLedValue = false;
+  bool _blueLedValue = false;
+  bool _greenLedValue = false;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _fetchCurrentValue();
+    _fetchCurrentValues();
   }
 
-  Future<void> _fetchCurrentValue() async {
+  Future<void> _fetchCurrentValues() async {
     try {
-      final DataSnapshot snapshot = await _dbRef.get();
+      final redSnapshot = await _redLedRef.get();
+      final blueSnapshot = await _blueLedRef.get();
+      final greenSnapshot = await _greenLedRef.get();
+
       setState(() {
-        _currentValue = (snapshot.value as bool?) ?? false;
+        _redLedValue = (redSnapshot.value as bool?) ?? false;
+        _blueLedValue = (blueSnapshot.value as bool?) ?? false;
+        _greenLedValue = (greenSnapshot.value as bool?) ?? false;
         _isLoading = false;
       });
     } catch (error) {
-      print('Error fetching value: $error');
+      print('Error fetching values: $error');
       setState(() {
         _isLoading = false;
       });
     }
   }
 
-  Future<void> _toggleValue() async {
-    try {
-      final newValue = !_currentValue;
-      await _dbRef.set(newValue);
+  Future<void> _toggleRedLed() async {
+    await _toggleValue(_redLedRef, _redLedValue, (newValue) {
       setState(() {
-        _currentValue = newValue;
+        _redLedValue = newValue;
       });
+    });
+  }
+
+  Future<void> _toggleBlueLed() async {
+    await _toggleValue(_blueLedRef, _blueLedValue, (newValue) {
+      setState(() {
+        _blueLedValue = newValue;
+      });
+    });
+  }
+
+  Future<void> _toggleGreenLed() async {
+    await _toggleValue(_greenLedRef, _greenLedValue, (newValue) {
+      setState(() {
+        _greenLedValue = newValue;
+      });
+    });
+  }
+
+  Future<void> _toggleValue(DatabaseReference dbRef, bool currentValue,
+      Function(bool) onSuccess) async {
+    try {
+      final newValue = !currentValue;
+      await dbRef.set(newValue);
+      onSuccess(newValue);
     } catch (error) {
       print('Error toggling value: $error');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -81,13 +116,30 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Current Value: $_currentValue',
+                    'Red LED Value: $_redLedValue',
                     style: TextStyle(fontSize: 20),
                   ),
-                  SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: _toggleValue,
-                    child: Text('Toggle Value'),
+                    onPressed: _toggleRedLed,
+                    child: Text('Toggle Red LED'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Blue LED Value: $_blueLedValue',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                    onPressed: _toggleBlueLed,
+                    child: Text('Toggle Blue LED'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Green LED Value: $_greenLedValue',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                    onPressed: _toggleGreenLed,
+                    child: Text('Toggle Green LED'),
                   ),
                 ],
               ),
