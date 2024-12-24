@@ -34,10 +34,13 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
       FirebaseDatabase.instance.ref('/blue_led');
   final DatabaseReference _greenLedRef =
       FirebaseDatabase.instance.ref('/green_led');
+  final DatabaseReference _yellowLedRef =
+      FirebaseDatabase.instance.ref('/yellow_led');
 
   bool _redLedValue = false;
   bool _blueLedValue = false;
   bool _greenLedValue = false;
+  bool _yellowLedValue = false;
   bool _isLoading = true;
 
   @override
@@ -101,6 +104,15 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
     });
   }
 
+  Future<void> _toggleYellowLed() async {
+    // Step 2: Create a method to toggle the yellow LED
+    await _toggleValue(_yellowLedRef, _yellowLedValue, (newValue) {
+      setState(() {
+        _yellowLedValue = newValue;
+      });
+    });
+  }
+
   Future<void> _toggleGreenLed() async {
     await _toggleValue(_greenLedRef, _greenLedValue, (newValue) {
       setState(() {
@@ -141,7 +153,8 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                   ),
                   ElevatedButton(
                     onPressed: _toggleRedLed,
-                    child: Text('Toggle Red LED'),
+                    child: Text(
+                        _redLedValue ? 'Turn Red LED Off' : 'Turn Red LED On'),
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -150,7 +163,9 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                   ),
                   ElevatedButton(
                     onPressed: _toggleGreenLed,
-                    child: Text('Toggle Green LED'),
+                    child: Text(_greenLedValue
+                        ? 'Turn Green LED Off'
+                        : 'Turn Green LED On'),
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -159,7 +174,20 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                   ),
                   ElevatedButton(
                     onPressed: _toggleBlueLed,
-                    child: Text('Toggle Blue LED'),
+                    child: Text(_blueLedValue
+                        ? 'Turn Blue LED Off'
+                        : 'Turn Blue LED On'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Blue LED Value: $_yellowLedValue',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                    onPressed: _toggleYellowLed,
+                    child: Text(_yellowLedValue
+                        ? 'Turn Yellow LED Off'
+                        : 'Turn Yellow LED On'),
                   ),
                 ],
               ),
