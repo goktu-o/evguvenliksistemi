@@ -139,58 +139,119 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Firebase Toggle'),
+        title: const Text(
+          'LED Control',
+          style: TextStyle(
+              color: Colors.white), // Change navbar text color to white
+        ),
+        backgroundColor:
+            Colors.deepPurple[900], // Change navbar color to dark purple
       ),
-      body: Center(
-        child: _isLoading
-            ? CircularProgressIndicator()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Red LED Value: $_redLedValue',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  ElevatedButton(
-                    onPressed: _toggleRedLed,
-                    child: Text(
-                        _redLedValue ? 'Turn Red LED Off' : 'Turn Red LED On'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Green LED Value: $_greenLedValue',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  ElevatedButton(
-                    onPressed: _toggleGreenLed,
-                    child: Text(_greenLedValue
-                        ? 'Turn Green LED Off'
-                        : 'Turn Green LED On'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Blue LED Value: $_blueLedValue',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  ElevatedButton(
-                    onPressed: _toggleBlueLed,
-                    child: Text(_blueLedValue
-                        ? 'Turn Blue LED Off'
-                        : 'Turn Blue LED On'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Blue LED Value: $_yellowLedValue',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  ElevatedButton(
-                    onPressed: _toggleYellowLed,
-                    child: Text(_yellowLedValue
-                        ? 'Turn Yellow LED Off'
-                        : 'Turn Yellow LED On'),
-                  ),
-                ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.deepPurple, Colors.purpleAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Red LED Value: $_redLedValue',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color:
+                                    Colors.white), // Change text color to white
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _toggleRedLed,
+                          child: Text(_redLedValue
+                              ? 'Turn Red LED Off'
+                              : 'Turn Red LED On'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Green LED Value: $_greenLedValue',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color:
+                                    Colors.white), // Change text color to white
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _toggleGreenLed,
+                          child: Text(_greenLedValue
+                              ? 'Turn Green LED Off'
+                              : 'Turn Green LED On'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Blue LED Value: $_blueLedValue',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color:
+                                    Colors.white), // Change text color to white
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _toggleBlueLed,
+                          child: Text(_blueLedValue
+                              ? 'Turn Blue LED Off'
+                              : 'Turn Blue LED On'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Yellow LED Value: $_yellowLedValue',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color:
+                                    Colors.white), // Change text color to white
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: _toggleYellowLed,
+                          child: Text(_yellowLedValue
+                              ? 'Turn Yellow LED Off'
+                              : 'Turn Yellow LED On'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
       ),
     );
   }
