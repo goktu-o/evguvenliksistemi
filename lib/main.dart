@@ -43,6 +43,25 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
   void initState() {
     super.initState();
     _fetchCurrentValues();
+
+    // Listen for real-time updates
+    _redLedRef.onValue.listen((event) {
+      setState(() {
+        _redLedValue = (event.snapshot.value as bool?) ?? false;
+      });
+    });
+
+    _blueLedRef.onValue.listen((event) {
+      setState(() {
+        _blueLedValue = (event.snapshot.value as bool?) ?? false;
+      });
+    });
+
+    _greenLedRef.onValue.listen((event) {
+      setState(() {
+        _greenLedValue = (event.snapshot.value as bool?) ?? false;
+      });
+    });
   }
 
   Future<void> _fetchCurrentValues() async {
@@ -125,21 +144,21 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Blue LED Value: $_blueLedValue',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  ElevatedButton(
-                    onPressed: _toggleBlueLed,
-                    child: Text('Toggle Blue LED'),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
                     'Green LED Value: $_greenLedValue',
                     style: TextStyle(fontSize: 20),
                   ),
                   ElevatedButton(
                     onPressed: _toggleGreenLed,
                     child: Text('Toggle Green LED'),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Blue LED Value: $_blueLedValue',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                    onPressed: _toggleBlueLed,
+                    child: Text('Toggle Blue LED'),
                   ),
                 ],
               ),
