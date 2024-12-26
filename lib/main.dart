@@ -120,7 +120,7 @@ class ToggleValuePageState extends State<ToggleValuePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'LED Control',
           style: TextStyle(
               color: Colors.white), // Change navbar text color to white
@@ -129,7 +129,7 @@ class ToggleValuePageState extends State<ToggleValuePage> {
             Colors.deepPurple[900], // Change navbar color to dark purple
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.deepPurple, Colors.purpleAccent],
             begin: Alignment.topLeft,
@@ -148,51 +148,75 @@ class ToggleValuePageState extends State<ToggleValuePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text(
-                            'Red LED Value: $_redLedValue',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color:
-                                    Colors.white), // Change text color to white
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.warning,
+                                color: _redLedValue
+                                    ? Colors.red
+                                    : Colors.red.withOpacity(0.3),
+                                size: 30.0,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Gas Leak: $_redLedValue',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors
+                                        .white), // Change text color to white
+                              ),
+                            ],
                           ),
                         ),
                         ElevatedButton(
                           onPressed: _toggleRedLed,
                           child: Text(_redLedValue
-                              ? 'Turn Red LED Off'
-                              : 'Turn Red LED On'),
+                              ? 'Turn Gas Leak Off'
+                              : 'Turn Gas Leak On'),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                          child: Text(
-                            'Blue LED Value: $_blueLedValue',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color:
-                                    Colors.white), // Change text color to white
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.water_damage,
+                                color: _blueLedValue
+                                    ? Colors.blue
+                                    : Colors.blue.withOpacity(0.3),
+                                size: 30.0,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Water Leak: $_blueLedValue',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors
+                                        .white), // Change text color to white
+                              ),
+                            ],
                           ),
                         ),
                         ElevatedButton(
                           onPressed: _toggleBlueLed,
                           child: Text(_blueLedValue
-                              ? 'Turn Blue LED Off'
-                              : 'Turn Blue LED On'),
+                              ? 'Turn Water Leak Off'
+                              : 'Turn Water Leak On'),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: Text(
                             'Extra Button Value: $_extraButtonValue',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 20,
                                 color:
                                     Colors.white), // Change text color to white
