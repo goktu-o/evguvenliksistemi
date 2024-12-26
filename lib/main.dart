@@ -60,20 +60,27 @@ class ToggleValuePageState extends State<ToggleValuePage> {
         _blueLedValue = (event.snapshot.value as bool?) ?? false;
       });
     });
+
+    _extraButtonRef.onValue.listen((event) {
+      setState(() {
+        _extraButtonValue = (event.snapshot.value as bool?) ?? false;
+      });
+    });
   }
 
   Future<void> _fetchCurrentValues() async {
     try {
       final redSnapshot = await _redLedRef.get();
       final blueSnapshot = await _blueLedRef.get();
+      final extraButtonSnapshot = await _extraButtonRef.get();
 
       setState(() {
         _redLedValue = (redSnapshot.value as bool?) ?? false;
         _blueLedValue = (blueSnapshot.value as bool?) ?? false;
+        _extraButtonValue = (extraButtonSnapshot.value as bool?) ?? false;
       });
     } catch (error) {
-      print('Error fetching values: $error');
-      setState(() {});
+      print('Error fetching initial values: $error');
     }
   }
 
@@ -144,91 +151,123 @@ class ToggleValuePageState extends State<ToggleValuePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
+                    Container(
+                      color: Colors.white
+                          .withOpacity(0.2), // Add a flat color background
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Row(
                             children: [
-                              Icon(
-                                Icons.warning,
-                                color: _redLedValue
-                                    ? Colors.red
-                                    : Colors.red.withOpacity(0.3),
-                                size: 30.0,
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(
+                                      0.5), // Background color for icon
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.warning,
+                                  color: _redLedValue
+                                      ? Colors.red
+                                      : Colors.red.withOpacity(0.3),
+                                  size: 30.0,
+                                ),
                               ),
                               SizedBox(width: 10),
-                              Text(
-                                'Gas Leak: $_redLedValue',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors
-                                        .white), // Change text color to white
+                              Expanded(
+                                child: Text(
+                                  'Gas Leak: $_redLedValue',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .white), // Change text color to white
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        ElevatedButton(
-                          onPressed: _toggleRedLed,
-                          child: Text(_redLedValue
-                              ? 'Turn Gas Leak Off'
-                              : 'Turn Gas Leak On'),
-                        ),
-                      ],
+                          ElevatedButton(
+                            onPressed: _toggleRedLed,
+                            child: Text(_redLedValue
+                                ? 'Turn Gas Leak Off'
+                                : 'Turn Gas Leak On'),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
+                    Container(
+                      color: Colors.white
+                          .withOpacity(0.2), // Add a flat color background
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Row(
                             children: [
-                              Icon(
-                                Icons.water_damage,
-                                color: _blueLedValue
-                                    ? Colors.blue
-                                    : Colors.blue.withOpacity(0.3),
-                                size: 30.0,
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(
+                                      0.5), // Background color for icon
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.water_damage,
+                                  color: _blueLedValue
+                                      ? Colors.blue
+                                      : Colors.blue.withOpacity(0.3),
+                                  size: 30.0,
+                                ),
                               ),
                               SizedBox(width: 10),
-                              Text(
-                                'Water Leak: $_blueLedValue',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors
-                                        .white), // Change text color to white
+                              Expanded(
+                                child: Text(
+                                  'Water Leak: $_blueLedValue',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .white), // Change text color to white
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        ElevatedButton(
-                          onPressed: _toggleBlueLed,
-                          child: Text(_blueLedValue
-                              ? 'Turn Water Leak Off'
-                              : 'Turn Water Leak On'),
-                        ),
-                      ],
+                          ElevatedButton(
+                            onPressed: _toggleBlueLed,
+                            child: Text(_blueLedValue
+                                ? 'Turn Water Leak Off'
+                                : 'Turn Water Leak On'),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Extra Button Value: $_extraButtonValue',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color:
-                                    Colors.white), // Change text color to white
+                    Container(
+                      color: Colors.white
+                          .withOpacity(0.2), // Add a flat color background
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Extra Button Value: $_extraButtonValue',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors
+                                          .white), // Change text color to white
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        ElevatedButton(
-                          onPressed: _toggleExtraButton,
-                          child: Text(_extraButtonValue
-                              ? 'Turn Extra Button Off'
-                              : 'Turn Extra Button On'),
-                        ),
-                      ],
+                          ElevatedButton(
+                            onPressed: _toggleExtraButton,
+                            child: Text(_extraButtonValue
+                                ? 'Turn Extra Button Off'
+                                : 'Turn Extra Button On'),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
