@@ -36,14 +36,11 @@ class ToggleValuePageState extends State<ToggleValuePage> {
       FirebaseDatabase.instance.ref('/red_led');
   final DatabaseReference _blueLedRef =
       FirebaseDatabase.instance.ref('/blue_led');
-  final DatabaseReference _greenLedRef =
-      FirebaseDatabase.instance.ref('/green_led');
   final DatabaseReference _extraButtonRef =
       FirebaseDatabase.instance.ref('/extra_button');
 
   bool _redLedValue = false;
   bool _blueLedValue = false;
-  bool _greenLedValue = false;
   bool _extraButtonValue = false;
 
   @override
@@ -63,24 +60,16 @@ class ToggleValuePageState extends State<ToggleValuePage> {
         _blueLedValue = (event.snapshot.value as bool?) ?? false;
       });
     });
-
-    _greenLedRef.onValue.listen((event) {
-      setState(() {
-        _greenLedValue = (event.snapshot.value as bool?) ?? false;
-      });
-    });
   }
 
   Future<void> _fetchCurrentValues() async {
     try {
       final redSnapshot = await _redLedRef.get();
       final blueSnapshot = await _blueLedRef.get();
-      final greenSnapshot = await _greenLedRef.get();
 
       setState(() {
         _redLedValue = (redSnapshot.value as bool?) ?? false;
         _blueLedValue = (blueSnapshot.value as bool?) ?? false;
-        _greenLedValue = (greenSnapshot.value as bool?) ?? false;
       });
     } catch (error) {
       print('Error fetching values: $error');
@@ -100,14 +89,6 @@ class ToggleValuePageState extends State<ToggleValuePage> {
     await _toggleValue(_blueLedRef, _blueLedValue, (newValue) {
       setState(() {
         _blueLedValue = newValue;
-      });
-    });
-  }
-
-  Future<void> _toggleGreenLed() async {
-    await _toggleValue(_greenLedRef, _greenLedValue, (newValue) {
-      setState(() {
-        _greenLedValue = newValue;
       });
     });
   }
@@ -180,27 +161,6 @@ class ToggleValuePageState extends State<ToggleValuePage> {
                           child: Text(_redLedValue
                               ? 'Turn Red LED Off'
                               : 'Turn Red LED On'),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Green LED Value: $_greenLedValue',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color:
-                                    Colors.white), // Change text color to white
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: _toggleGreenLed,
-                          child: Text(_greenLedValue
-                              ? 'Turn Green LED Off'
-                              : 'Turn Green LED On'),
                         ),
                       ],
                     ),
