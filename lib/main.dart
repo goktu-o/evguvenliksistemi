@@ -8,13 +8,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ToggleValuePage(),
     );
@@ -22,11 +24,13 @@ class MyApp extends StatelessWidget {
 }
 
 class ToggleValuePage extends StatefulWidget {
+  const ToggleValuePage({super.key});
+
   @override
-  _ToggleValuePageState createState() => _ToggleValuePageState();
+  ToggleValuePageState createState() => ToggleValuePageState();
 }
 
-class _ToggleValuePageState extends State<ToggleValuePage> {
+class ToggleValuePageState extends State<ToggleValuePage> {
   // Firebase Realtime Database references
   final DatabaseReference _redLedRef =
       FirebaseDatabase.instance.ref('/red_led');
@@ -34,14 +38,13 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
       FirebaseDatabase.instance.ref('/blue_led');
   final DatabaseReference _greenLedRef =
       FirebaseDatabase.instance.ref('/green_led');
-  final DatabaseReference _yellowLedRef =
-      FirebaseDatabase.instance.ref('/yellow_led');
+  final DatabaseReference _extraButtonRef =
+      FirebaseDatabase.instance.ref('/extra_button');
 
   bool _redLedValue = false;
   bool _blueLedValue = false;
   bool _greenLedValue = false;
-  bool _yellowLedValue = false;
-  bool _isLoading = true;
+  bool _extraButtonValue = false;
 
   @override
   void initState() {
@@ -78,13 +81,10 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
         _redLedValue = (redSnapshot.value as bool?) ?? false;
         _blueLedValue = (blueSnapshot.value as bool?) ?? false;
         _greenLedValue = (greenSnapshot.value as bool?) ?? false;
-        _isLoading = false;
       });
     } catch (error) {
       print('Error fetching values: $error');
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() {});
     }
   }
 
@@ -104,19 +104,18 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
     });
   }
 
-  Future<void> _toggleYellowLed() async {
-    // Step 2: Create a method to toggle the yellow LED
-    await _toggleValue(_yellowLedRef, _yellowLedValue, (newValue) {
-      setState(() {
-        _yellowLedValue = newValue;
-      });
-    });
-  }
-
   Future<void> _toggleGreenLed() async {
     await _toggleValue(_greenLedRef, _greenLedValue, (newValue) {
       setState(() {
         _greenLedValue = newValue;
+      });
+    });
+  }
+
+  Future<void> _toggleExtraButton() async {
+    await _toggleValue(_extraButtonRef, _extraButtonValue, (newValue) {
+      setState(() {
+        _extraButtonValue = newValue;
       });
     });
   }
@@ -129,8 +128,9 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
       onSuccess(newValue);
     } catch (error) {
       print('Error toggling value: $error');
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to toggle value')),
+        const SnackBar(content: Text('Failed to toggle value')),
       );
     }
   }
@@ -231,7 +231,7 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                       children: [
                         Expanded(
                           child: Text(
-                            'Yellow LED Value: $_yellowLedValue',
+                            'Extra Button Value: $_extraButtonValue',
                             style: const TextStyle(
                                 fontSize: 20,
                                 color:
@@ -239,10 +239,10 @@ class _ToggleValuePageState extends State<ToggleValuePage> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: _toggleYellowLed,
-                          child: Text(_yellowLedValue
-                              ? 'Turn Yellow LED Off'
-                              : 'Turn Yellow LED On'),
+                          onPressed: _toggleExtraButton,
+                          child: Text(_extraButtonValue
+                              ? 'Turn Extra Button Off'
+                              : 'Turn Extra Button On'),
                         ),
                       ],
                     ),
